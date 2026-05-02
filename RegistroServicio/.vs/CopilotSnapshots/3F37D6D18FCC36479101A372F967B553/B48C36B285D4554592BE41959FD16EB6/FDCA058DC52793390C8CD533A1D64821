@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Text;
+using static RegistroServicio.Clases.ini;
+
+namespace RegistroServicio.Clases
+{
+    class Conexion
+    {
+        public static SqlConnection Conectar()
+        {
+            string ruta = @"C:\sistema\config.ini";
+
+            Ini ini = new Ini(ruta);
+
+            string server = ini.Leer("database", "server");
+            string database = ini.Leer("database", "database");
+            string user = ini.Leer("database", "user");
+            string password = ini.Leer("database", "password");
+
+            string cadena = $"Server={server};Database={database};Integrated Security=True;TrustServerCertificate=True;";
+
+
+            SqlConnection cn = new SqlConnection(cadena);
+
+            cn.Open();
+
+            return cn;
+        }
+    }
+}
